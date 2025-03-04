@@ -19,6 +19,8 @@ export async function POST(req: Request) {
   const svix_timestamp = headerPayload.get("svix-timestamp");
   const svix_signature = headerPayload.get("svix-signature");
 
+  console.log({ svix_id, svix_timestamp, svix_signature });
+
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return new Response("Error: Missing Svix headers", {
@@ -29,6 +31,8 @@ export async function POST(req: Request) {
   // Get body
   const payload = await req.json();
   const body = JSON.stringify(payload);
+
+  console.log({ payload });
 
   let evt: WebhookEvent;
 
@@ -41,7 +45,9 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
 
     if (evt.type === "user.created") {
-      const { id: clerkUserId, email_addresses, first_name, last_name, image_url, username } = evt.data;
+      console.log("User created event");
+
+      const { id: clerkUserId, email_addresses, first_name, last_name, image_url } = evt.data;
 
       const existingUser = await prisma.user.findUnique({
         where: {
@@ -63,6 +69,8 @@ export async function POST(req: Request) {
     }
 
     if (evt.type === "session.created") {
+      console.log("Session created event");
+
       const { user_id } = evt.data;
       const clerk = await clerkClient();
 
