@@ -13,9 +13,10 @@ interface Props {
   song: Song & { isLiked: boolean; artists: (SongArtistMap & { artist: Artist })[] };
   action: () => void;
   onLiked: () => void;
+  hideLike?: boolean;
 }
 
-const SongCard = ({ song, action, onLiked }: Props) => {
+const SongCard = ({ song, action, onLiked, hideLike = false }: Props) => {
   const [isLiked, setLiked] = useState(song.isLiked);
 
   const handleLikeOrUnlikeSong = async () => {
@@ -56,13 +57,15 @@ const SongCard = ({ song, action, onLiked }: Props) => {
         <p className="text-xs text-secondary">{song.artists.map((a) => a.artist.name).join(", ")}</p>
       </div>
       <div className="flex items-center pr-2">
-        <HeartIcon
-          className={cn("h-4 w-4", isLiked && "fill-rose-900 stroke-rose-900")}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleLikeOrUnlikeSong();
-          }}
-        />
+        {!hideLike && (
+          <HeartIcon
+            className={cn("h-4 w-4", isLiked && "fill-rose-900 stroke-rose-900")}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleLikeOrUnlikeSong();
+            }}
+          />
+        )}
       </div>
     </div>
   );
