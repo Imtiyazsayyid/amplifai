@@ -26,10 +26,106 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  // headInOrganizations  OrganizationHead[]
-  // notifications        Notification[]
-  // transaction          Transaction[]
-  // groqRequests         GroqRequests[]
-  // conversationMembers  ConversationMember[]
-  // conversationMessages ConversationMessage[]
+  likedSongs LikedSong[]
+  Playlists  Playlist[]
+}
+
+model Song {
+  songId Int     @id @default(autoincrement())
+  imgUrl String? @db.LongText
+  name   String
+  url    String
+  genre  Genre
+
+  status     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  artists       SongArtistMap[]
+  likedSongs    LikedSong[]
+  PlaylistSongs PlaylistSong[]
+}
+
+model LikedSong {
+  likedSongsId Int  @id @default(autoincrement())
+  userId       Int
+  songId       Int
+  user         User @relation(fields: [userId], references: [userId])
+  song         Song @relation(fields: [songId], references: [songId])
+
+  status     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Playlist {
+  playlistId Int     @id @default(autoincrement())
+  userId     Int
+  name       String
+  imgUrl     String? @db.LongText
+
+  status     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  user  User           @relation(fields: [userId], references: [userId])
+  songs PlaylistSong[]
+}
+
+model PlaylistSong {
+  playlistSongsId Int      @id @default(autoincrement())
+  playlistId      Int
+  songId          Int
+  playlist        Playlist @relation(fields: [playlistId], references: [playlistId])
+  song            Song     @relation(fields: [songId], references: [songId])
+
+  status     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model SongArtistMap {
+  songArtistMapId Int    @id @default(autoincrement())
+  songId          Int
+  artistId        Int
+  song            Song   @relation(fields: [songId], references: [songId])
+  artist          Artist @relation(fields: [artistId], references: [artistId])
+
+  status     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Artist {
+  artistId Int     @id @default(autoincrement())
+  name     String
+  imgUrl   String? @db.LongText
+
+  status     Boolean         @default(true)
+  created_at DateTime        @default(now())
+  updated_at DateTime        @default(now())
+  songs      SongArtistMap[]
+}
+
+enum Genre {
+  POP
+  ROCK
+  JAZZ
+  HIPHOP
+  CLASSICAL
+  REGGAE
+  BLUES
+  COUNTRY
+  METAL
+  FOLK
+  ELECTRONIC
+  RAP
+  RNB
+  SOUL
+  PUNK
+  DANCE
+  REGGAETON
+  SALSA
+  BACHATA
+  MERENGUE
 }

@@ -1,16 +1,4 @@
-import {
-  BellIcon,
-  Building2Icon,
-  CircleDollarSignIcon,
-  DollarSignIcon,
-  HomeIcon,
-  MessageCircleIcon,
-  PlusCircleIcon,
-  SearchIcon,
-  SettingsIcon,
-  UserCircleIcon,
-  WalletIcon,
-} from "lucide-react";
+import { Disc3Icon, HeartIcon, HomeIcon, MenuIcon, MicVocalIcon, MusicIcon, SettingsIcon } from "lucide-react";
 
 export const navBarItems = [
   {
@@ -19,38 +7,33 @@ export const navBarItems = [
     icon: HomeIcon,
   },
   {
-    path: "/organizations",
-    title: "Organizations",
-    icon: Building2Icon,
-  },
-  {
-    path: "/organizations/finances",
-    title: "Finances",
-    icon: DollarSignIcon,
-  },
-  {
-    path: "/organizations/conversations",
-    title: "Conversations",
-    icon: MessageCircleIcon,
+    path: "/music",
+    title: "Music",
+    icon: MusicIcon,
   },
   // {
-  //   path: "/search",
-  //   title: "Search",
-  //   icon: SearchIcon,
-  // },
-  // {
-  //   path: "/post",
-  //   title: "Post",
-  //   icon: PlusCircleIcon,
+  //   path: "/play",
+  //   title: "Play",
+  //   icon: Disc3Icon,
   // },
   {
-    path: "/organizations/settings",
+    path: "/artists",
+    title: "Artists",
+    icon: MicVocalIcon,
+  },
+  {
+    path: "/liked-songs",
+    title: "Liked",
+    icon: HeartIcon,
+  },
+  {
+    path: "/playlists/",
+    title: "Playlist",
+    icon: MenuIcon,
+  },
+  {
+    path: "/settings/",
     title: "Settings",
     icon: SettingsIcon,
-  },
-  {
-    path: "/organizations/notifications",
-    title: "Notifications",
-    icon: BellIcon,
   },
 ];
