@@ -149,3 +149,49 @@ export const getAllSongsByPlaylistId = async (playlistId: number): Promise<Actio
     return { data: null, message: "Failed to ", status: false };
   }
 };
+
+export const deletePlaylist = async (playlistId: number): Promise<ActionResponse> => {
+  try {
+    const res = await verifyAndGetUser();
+
+    if (!res.status) {
+      return { data: null, message: res.message, status: res.status };
+    }
+
+    const user = res.data;
+
+    // First check if the playlist belongs to the user
+    const playlist = await prisma.playlist.findUnique({
+      where: {
+        playlistId,
+      },
+    });
+
+    if (!playlist) {
+      return { data: null, message: "Playlist not found", status: false };
+    }
+
+    if (playlist.userId !== user.userId) {
+      return { data: null, message: "You don't have permission to delete this playlist", status: false };
+    }
+
+    // Delete all songs in the playlist first (due to foreign key constraints)
+    await prisma.playlistSong.deleteMany({
+      where: {
+        playlistId,
+      },
+    });
+
+    // Then delete the playlist
+    await prisma.playlist.delete({
+      where: {
+        playlistId,
+      },
+    });
+
+    return { data: null, message: "Playlist deleted successfully", status: true };
+  } catch (error) {
+    console.log({ error });
+    return { data: null, message: "Failed to delete playlist", status: false };
+  }
+};
