@@ -1,4 +1,13 @@
-import { Disc3Icon, HeartIcon, HomeIcon, MenuIcon, MicVocalIcon, MusicIcon, SettingsIcon } from "lucide-react";
+import {
+  Disc3Icon,
+  HeartIcon,
+  HomeIcon,
+  MenuIcon,
+  MicVocalIcon,
+  MusicIcon,
+  SettingsIcon,
+  RadioIcon,
+} from "lucide-react";
 
 export const navBarItems = [
   {
@@ -20,6 +29,11 @@ export const navBarItems = [
     path: "/artists",
     title: "Artists",
     icon: MicVocalIcon,
+  },
+  {
+    path: "/detect",
+    title: "Detect",
+    icon: RadioIcon,
   },
   {
     path: "/liked-songs",
