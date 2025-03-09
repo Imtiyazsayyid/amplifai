@@ -7,6 +7,7 @@ import {
   MusicIcon,
   SettingsIcon,
   RadioIcon,
+  TagsIcon,
 } from "lucide-react";
 
 export const navBarItems = [
@@ -29,6 +30,11 @@ export const navBarItems = [
     path: "/artists",
     title: "Artists",
     icon: MicVocalIcon,
+  },
+  {
+    path: "/genres",
+    title: "Genres",
+    icon: TagsIcon,
   },
   {
     path: "/detect",
